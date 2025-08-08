@@ -30,29 +30,32 @@ public class EmployeeJpaService implements EmployeeRepository {
     }
 
     @Override
-    public Employee addEmployee(Employee employee){
-        employeeJpaRepository.save(employee);
-        return employee;
+    public Employee addEmployee(Employee employee) {
+        return employeeJpaRepository.save(employee);
     }
 
     @Override
-    public Employee updateEmployee(int employeeId,Employee employee){
-        try{
-            Employee existingEmployee = getEmployeeById(employeeId);
-            if(employee.getEmployeeName()!=null){
-                existingEmployee.setEmployeeName(employee.getEmployeeName());
-            }
-            if(employee.getEmail()!=null){
-                existingEmployee.setEmail(employee.getEmail());
-            }
-            if(employee.getDepartment()!=null){
-                existingEmployee.setEmployeeName(employee.getDepartment());
-            }
-            employeeJpaRepository.save(existingEmployee);
-            return existingEmployee;
+    public Employee updateEmployee(int employeeId, Employee employee) {
+        Employee existingEmployee = getEmployeeById(employeeId);
+
+        if (employee.getEmployeeName() != null) {
+            existingEmployee.setEmployeeName(employee.getEmployeeName());
         }
-        catch(Exception e){
+        if (employee.getEmail() != null) {
+            existingEmployee.setEmail(employee.getEmail());
+        }
+        if (employee.getDepartment() != null) {
+            existingEmployee.setDepartment(employee.getDepartment()); 
+        }
+
+        return employeeJpaRepository.save(existingEmployee);
+    }
+
+    @Override
+    public void deleteEmployee(int employeeId) {
+        if (!employeeJpaRepository.existsById(employeeId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        employeeJpaRepository.deleteById(employeeId);
     }
 }
