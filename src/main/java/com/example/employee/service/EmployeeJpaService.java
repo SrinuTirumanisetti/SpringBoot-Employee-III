@@ -28,4 +28,10 @@ public class EmployeeJpaService implements EmployeeRepository {
         return employeeJpaRepository.findById(employeeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
     }
+
+    @Override
+    public Employee addEmployee(Employee employee){
+        employeeJpaRepository.save(employee);
+        return employee;
+    }
 }

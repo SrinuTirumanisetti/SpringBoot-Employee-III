@@ -29,6 +29,11 @@ public class EmployeeController {
         return employeeRepository.getAllEmployees();
     }
 
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee){
+        return employeeRepository.addEmployee(employee);
+    }
+
     @GetMapping("/employees/{employeeId}")
     public Employee getEmployeeById(@PathVariable("employeeId") int employeeId) {
         return employeeRepository.getEmployeeById(employeeId);
