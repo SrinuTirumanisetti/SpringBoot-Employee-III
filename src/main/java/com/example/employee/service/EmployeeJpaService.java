@@ -34,4 +34,25 @@ public class EmployeeJpaService implements EmployeeRepository {
         employeeJpaRepository.save(employee);
         return employee;
     }
+
+    @Override
+    public Employee updateEmployee(int employeeId,Employee employee){
+        try{
+            Employee existingEmployee = getEmployeeById(employeeId);
+            if(employee.getEmployeeName()!=null){
+                existingEmployee.setEmployeeName(employee.getEmployeeName());
+            }
+            if(employee.getEmail()!=null){
+                existingEmployee.setEmail(employee.getEmail());
+            }
+            if(employee.getDepartment()!=null){
+                existingEmployee.setEmployeeName(employee.getDepartment());
+            }
+            employeeJpaRepository.save(existingEmployee);
+            return existingEmployee;
+        }
+        catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 }
